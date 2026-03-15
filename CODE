@@ -1,0 +1,47 @@
+import numpy as np
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+def tanh(x):
+    return np.tanh(x)
+
+# input sequence
+x = [1,2,3]
+
+# initial states
+h = 0
+c = 0
+
+# weights
+Wf, Uf, bf = 0.5, 0.1, 0
+Wi, Ui, bi = 0.6, 0.2, 0
+Wc, Uc, bc = 0.7, 0.3, 0
+Wo, Uo, bo = 0.8, 0.4, 0
+
+for t in range(len(x)):
+
+    xt = x[t]
+
+    f = round(sigmoid(Wf*xt + Uf*h + bf),3)
+    i = round(sigmoid(Wi*xt + Ui*h + bi),3)
+    g = round(tanh(Wc*xt + Uc*h + bc),3)
+
+    c = round(f*c + i*g,3)
+
+    o = round(sigmoid(Wo*xt + Uo*h + bo),3)
+
+    h = round(o*tanh(c),3)
+
+    print("Time Step",t+1)
+    print("Cell State:",c)
+    print("Hidden State:",h)
+    print("------")
+
+# output layer (prediction)
+Wy = 4
+by = 0.3
+
+y_pred = round(Wy*h + by,3)
+
+print("Predicted Next Value:",y_pred)
